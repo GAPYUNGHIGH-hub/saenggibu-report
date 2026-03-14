@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1학년 생기부 분석 — 입학사정관 3인 심층 리뷰</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #141720;
+  --surface2: #1c2030;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #e8eaf0;
+  --muted: #7a7f9a;
+  --accent-a: #7c6af7;
+  --accent-b: #3ecf8e;
+  --accent-c: #f5826e;
+  --accent-warn: #f5c542;
+  --accent-info: #5aabf7;
+  --serif: 'Noto Serif KR', serif;
+  --sans: 'Noto Sans KR', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.75;
+  min-height: 100vh;
+}
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  padding: 80px 24px 60px;
+  text-align: center;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 30%, rgba(124,106,247,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 35% at 80% 70%, rgba(62,207,142,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--accent-a);
+  background: rgba(124,106,247,0.12);
+  border: 1px solid rgba(124,106,247,0.3);
+  border-radius: 20px; padding: 4px 16px; margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 5vw, 44px);
+  font-weight: 700; line-height: 1.3;
+  color: #fff; margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.hero h1 em { font-style: normal; color: var(--accent-a); }
+.hero-sub {
+  font-size: 14px; color: var(--muted); max-width: 560px; margin: 0 auto 28px;
+}
+.hero-meta {
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+}
+.meta-chip {
+  font-size: 12px; padding: 5px 14px; border-radius: 20px;
+  border: 1px solid var(--border2); color: var(--muted);
+  background: var(--surface);
+}
+
+/* ─── LAYOUT ─── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; }
+
+/* ─── SCORE DASHBOARD ─── */
+.dashboard {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px; padding: 32px 28px; margin-bottom: 40px;
+}
+.dash-title {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 20px;
+}
+.score-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px;
+}
+.score-cell {
+  background: var(--bg); border-radius: 12px; padding: 16px 12px; text-align: center;
+  border: 1px solid var(--border);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.score-cell:hover { border-color: var(--border2); transform: translateY(-2px); }
+.score-num {
+  font-family: var(--serif);
+  font-size: 32px; font-weight: 700; line-height: 1;
+  margin-bottom: 6px;
+}
+.score-label { font-size: 11px; color: var(--muted); }
+.s-purple { color: var(--accent-a); }
+.s-green { color: var(--accent-b); }
+.s-orange { color: var(--accent-warn); }
+.s-red { color: var(--accent-c); }
+.s-blue { color: var(--accent-info); }
+
+/* ─── EVALUATOR CARDS ─── */
+.ev-section { margin-bottom: 48px; }
+.ev-label {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.ev-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+.av-a { background: rgba(124,106,247,0.2); color: var(--accent-a); border: 1px solid rgba(124,106,247,0.4); }
+.av-b { background: rgba(62,207,142,0.2); color: var(--accent-b); border: 1px solid rgba(62,207,142,0.4); }
+.av-c { background: rgba(245,130,110,0.2); color: var(--accent-c); border: 1px solid rgba(245,130,110,0.4); }
+.ev-name { font-size: 16px; font-weight: 700; color: #fff; }
+.ev-role { font-size: 12px; color: var(--muted); }
+
+.verdict-box {
+  background: var(--surface2);
+  border-left: 3px solid;
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px; margin-bottom: 20px;
+  font-size: 13.5px; color: var(--text); font-style: italic; line-height: 1.7;
+}
+.vb-a { border-color: var(--accent-a); }
+.vb-b { border-color: var(--accent-b); }
+.vb-c { border-color: var(--accent-c); }
+
+.sub-title {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin: 20px 0 10px; display: flex; align-items: center; gap: 8px;
+}
+.sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.item-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.item-list li {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 13.5px; line-height: 1.7; color: #c8cad8;
+}
+.dot-icon {
+  width: 7px; height: 7px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 8px;
+}
+.di-pos { background: var(--accent-b); }
+.di-neg { background: var(--accent-c); }
+.di-warn { background: var(--accent-warn); }
+strong { color: #fff; font-weight: 500; }
+
+/* mini score bars */
+.mini-scores { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.mini-cell { background: var(--bg); border-radius: 10px; padding: 12px 14px; border: 1px solid var(--border); }
+.mini-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.bar-wrap { height: 4px; background: rgba(255,255,255,0.07); border-radius: 2px; margin-bottom: 5px; }
+.bar-fill { height: 4px; border-radius: 2px; transition: width 1.5s ease; }
+.mini-val { font-size: 12px; font-weight: 500; color: var(--text); }
+
+/* ─── DIVIDER ─── */
+.divider {
+  border: none; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
+  margin: 40px 0;
+}
+
+/* ─── CRITICAL ISSUES ─── */
+.critical-section {
+  background: var(--surface);
+  border: 1px solid rgba(245,130,110,0.25);
+  border-radius: 20px; padding: 28px;
+  margin-bottom: 40px;
+}
+.critical-title {
+  font-family: var(--serif);
+  font-size: 18px; font-weight: 700; color: var(--accent-c);
+  margin-bottom: 20px;
+}
+.critical-item {
+  background: var(--bg); border-radius: 12px; padding: 18px 20px;
+  border: 1px solid var(--border); margin-bottom: 12px;
+}
+.crit-badge {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 10px; border-radius: 10px; margin-bottom: 8px;
+}
+.cb-1 { background: rgba(245,130,110,0.15); color: var(--accent-c); border: 1px solid rgba(245,130,110,0.3); }
+.cb-2 { background: rgba(245,197,66,0.12); color: var(--accent-warn); border: 1px solid rgba(245,197,66,0.3); }
+.cb-3 { background: rgba(90,171,247,0.12); color: var(--accent-info); border: 1px solid rgba(90,171,247,0.3); }
+.crit-head { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.crit-body { font-size: 13px; color: #9ca0b8; line-height: 1.7; }
+
+/* ─── STRATEGY ─── */
+.strategy-section {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px; padding: 28px;
+  margin-bottom: 40px;
+}
+.strategy-title {
+  font-family: var(--serif);
+  font-size: 18px; font-weight: 700; color: #fff;
+  margin-bottom: 24px;
+}
+.strat-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 18px 0; border-bottom: 1px solid var(--border);
+}
+.strat-item:last-child { border-bottom: none; padding-bottom: 0; }
+.strat-num-badge {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  background: rgba(124,106,247,0.15); color: var(--accent-a);
+  border: 1px solid rgba(124,106,247,0.35);
+}
+.strat-head { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.strat-body { font-size: 13px; color: #9ca0b8; line-height: 1.7; }
+.strat-tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 8px; margin-bottom: 7px;
+  background: rgba(245,197,66,0.12); color: var(--accent-warn);
+  border: 1px solid rgba(245,197,66,0.25);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  text-align: center; padding: 28px; font-size: 12px; color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ─── CONSENSUS BAR ─── */
+.consensus-section {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px; padding: 28px;
+  margin-bottom: 40px;
+}
+.cons-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+}
+.cons-label { font-size: 12px; color: var(--muted); width: 90px; flex-shrink: 0; }
+.cons-wrap { flex: 1; height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; }
+.cons-fill { height: 5px; border-radius: 3px; }
+.cons-val { font-size: 12px; font-weight: 700; color: var(--text); width: 30px; text-align: right; }
+
+/* ─── ANIMATION ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+@media (max-width: 600px) {
+  .mini-scores { grid-template-columns: 1fr; }
+  .score-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">학생부종합전형 대비 리포트</div>
+  <h1>1학년 생기부<br><em>입학사정관 3인 심층 분석</em></h1>
+  <p class="hero-sub">간호사(뇌신경 전문간호사) 희망 · 가평고등학교 1학년<br>교과 세특 전체 + 창체 + 봉사 종합 평가</p>
+  <div class="hero-meta">
+    <span class="meta-chip">A — 학업·탐구역량</span>
+    <span class="meta-chip">B — 진로·자기주도성</span>
+    <span class="meta-chip">C — 공동체·인성</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 종합 점수 -->
+  <div class="dashboard fade-up">
+    <div class="dash-title">3인 합의 — 역량별 종합 점수</div>
+    <div class="score-grid">
+      <div class="score-cell">
+        <div class="score-num s-blue">72</div>
+        <div class="score-label">학업역량</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num s-green">68</div>
+        <div class="score-label">탐구역량</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num s-orange">58</div>
+        <div class="score-label">진로역량</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num s-orange">63</div>
+        <div class="score-label">자기주도성</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num s-green">74</div>
+        <div class="score-label">공동체역량</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num s-purple">67</div>
+        <div class="score-label">종합 경쟁력</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A 평가관 -->
+  <div class="ev-section fade-up delay-1">
+    <div class="ev-label">
+      <div class="ev-avatar av-a">A</div>
+      <div>
+        <div class="ev-name">A 평가관 — 학업역량·탐구역량</div>
+        <div class="ev-role">교과 세특 / 수행평가 / 교과 간 융합 중점 심사</div>
+      </div>
+    </div>
+    <div class="verdict-box vb-a">
+      "교과 심화의 폭은 넓지만, 깊이의 증거가 불균형하다. 수학·과학은 강하고, 국어·사회는 탐구보다 활동 서술에 머문다."
+    </div>
+
+    <div class="sub-title">강점 — 확실히 드러난 것</div>
+    <ul class="item-list">
+      <li><span class="dot-icon di-pos"></span><span><strong>수학 세특:</strong> 혈당변화 이차함수 모델링, 라돈 42일 데이터 일차함수 시각화 — 실데이터와 교과 개념을 직접 연결한 구체적 탐구역량. 수학 세특 중 최상위 수준.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>과학탐구실험 세특:</strong> 접지·우유부패 실험 설계 → 변수 통제 한계 자기 지적 → 논문 분석(노이즈 방전 170배) → 전문용어 습득. '예상 밖 결과 → 탐구 방향 전환'이 명확히 보이는 유일한 세특.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>정보 세특:</strong> 교과 탐구 결과를 직접 프로그램으로 구현(라돈 환기 알림, 모듈러 연산). 배운 것을 도구로 만든 사례 — 정보처리역량의 실증.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>교과 간 융합:</strong> 수학(함수) + 과학(라돈) + 정보(코딩) + 진로활동이 하나의 탐구 스토리로 연결. 드물고 강력한 서사.</span></li>
+    </ul>
+
+    <div class="sub-title">약점 — 냉정한 지적</div>
+    <ul class="item-list">
+      <li><span class="dot-icon di-neg"></span><span><strong>국어 세특:</strong> 시 창작·독서일지 수준에 머묾. 진달래꽃 다학문 분석은 흥미롭지만 '수학으로 감정 그래프화'는 교과 연계가 아닌 아이디어 연상 수준.</span></li>
+      <li><span class="dot-icon di-neg"></span><span><strong>통합사회 세특:</strong> 발표·조사 활동 나열. '의료공백 시장실패 분석'은 방향이 좋으나 본인의 탐구 과정·난관·깨달음이 없다. 선생님이 요약한 내용이지 학생이 고민한 흔적이 보이지 않음.</span></li>
+      <li><span class="dot-icon di-neg"></span><span><strong>한국사 세특:</strong> 다양한 활동(가네코 후미코, 가상판결문, 영화기획)이 진로와 연결되지 않음. 역사 교과에서 간호·의료와 연결하는 탐구 시도 전무.</span></li>
+      <li><span class="dot-icon di-neg"></span><span><strong>전체 난관·극복 서사 부재:</strong> 과학탐구실험을 제외한 모든 세특에서 '막혔다 → 방법을 바꿨다 → 새로운 깨달음'의 구조가 없다. 탐구가 아닌 수행 결과 보고에 가깝다.</span></li>
+    </ul>
+
+    <div class="sub-title">교과별 역량 평가</div>
+    <div class="mini-scores">
+      <div class="mini-cell">
+        <div class="mini-label">수학</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:90%;background:var(--accent-b)"></div></div>
+        <div class="mini-val">매우 강 ★★★★★</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">과학탐구실험</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:85%;background:var(--accent-b)"></div></div>
+        <div class="mini-val">강 ★★★★☆</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">정보</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:80%;background:var(--accent-b)"></div></div>
+        <div class="mini-val">강 ★★★★☆</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">영어</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:75%;background:var(--accent-warn)"></div></div>
+        <div class="mini-val">양호 ★★★★☆</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">통합과학</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:65%;background:var(--accent-warn)"></div></div>
+        <div class="mini-val">보통 ★★★☆☆</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">국어·사회·한국사</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:40%;background:var(--accent-c)"></div></div>
+        <div class="mini-val">취약 ★★☆☆☆</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- B 평가관 -->
+  <div class="ev-section fade-up delay-2">
+    <div class="ev-label">
+      <div class="ev-avatar av-b">B</div>
+      <div>
+        <div class="ev-name">B 평가관 — 진로역량·자기주도성</div>
+        <div class="ev-role">진로 일관성 / 자기주도 탐구 / 진로 연결 필연성 중점 심사</div>
+      </div>
+    </div>
+    <div class="verdict-box vb-b">
+      "진로 키워드(간호·뇌신경)는 전방위 등장하지만, '왜 이 학생이어야 하는가'의 고유한 답이 아직 없다. 두 탐구 스토리가 분산돼 있어 통합이 시급하다."
+    </div>
+
+    <div class="sub-title">강점 — 진로 서사의 씨앗</div>
+    <ul class="item-list">
+      <li><span class="dot-icon di-pos"></span><span><strong>접지×산화환원×간호 축:</strong> 통합과학·과탐실험·스펙트럼동아리·자율활동·정보 세특이 연결. '접지 → 항산화 → 의료기기 노이즈 → 환자 안전'까지 이어지는 심화 구조 형성 시작.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>명상×뇌과학×전인간호 축:</strong> 인문독서발표·통합과학·영어 세특에서 연기론·신경가소성·감정재해석까지 연결. 철학-과학-임상을 잇는 독특한 진로 스토리 가능성.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>데이터과학 도구 능력:</strong> 라돈 42일 측정·파이썬 프로그램·PEF 생체지표 측정 — 간호학에서 보기 드문 이공계 데이터 리터러시. 뇌신경 전문간호사 진로와 연결 시 강력한 차별점.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>AI 의료 토론:</strong> 단순 찬반이 아닌 '단계적 도입 전략'이라는 구체적 대안 제시. 비판적 사고 역량이 진로 맥락에서 드러남.</span></li>
+    </ul>
+
+    <div class="sub-title">약점 — 진로 서사의 치명적 문제</div>
+    <ul class="item-list">
+      <li><span class="dot-icon di-neg"></span><span><strong>두 축의 연결점이 없다:</strong> '접지·산화환원' 축과 '명상·뇌과학' 축이 1학년 생기부 어디에도 만나지 않는다. 현재는 두 명의 다른 학생처럼 읽힌다. 2학년에서 반드시 통합해야 한다.</span></li>
+      <li><span class="dot-icon di-neg"></span><span><strong>진로 연결이 결론부 선언에 집중:</strong> "간호사가 되겠다", "간호사에게 ~이 중요하다" 식의 선언이 대부분. 탐구 과정 중간에서 진로가 자연스럽게 불거지는 장면이 없다.</span></li>
+      <li><span class="dot-icon di-neg"></span><span><strong>코티솔 독서 세특 아쉬움:</strong> 코티솔과 뇌신경·명상을 연결할 절호의 기회인데 '심층 탐구' 수준에서 끝남. 논문 분석·자기 측정 실험 없이 독서 요약+적용 선언으로 마무리.</span></li>
+      <li><span class="dot-icon di-warn"></span><span><strong>자기주도 탐구 증거 부분적:</strong> 과탐실험·정보·진로활동은 자기주도적이나, 나머지 교과 세특은 수업 참여·발표 수준. 스스로 연구 문제를 설정하고 방법을 결정한 장면이 부족하다.</span></li>
+    </ul>
+
+    <div class="sub-title">진로 서사 연결도</div>
+    <div class="mini-scores">
+      <div class="mini-cell">
+        <div class="mini-label">접지·산화환원 축 완성도</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:70%;background:var(--accent-warn)"></div></div>
+        <div class="mini-val">형성 중</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">명상·뇌과학 축 완성도</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:55%;background:var(--accent-warn)"></div></div>
+        <div class="mini-val">초기 단계</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">두 축 통합 여부</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:10%;background:var(--accent-c)"></div></div>
+        <div class="mini-val">미달성 ★</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">자기주도 탐구 증거</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:60%;background:var(--accent-warn)"></div></div>
+        <div class="mini-val">부분적</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- C 평가관 -->
+  <div class="ev-section fade-up delay-3">
+    <div class="ev-label">
+      <div class="ev-avatar av-c">C</div>
+      <div>
+        <div class="ev-name">C 평가관 — 공동체역량·인성·리더십</div>
+        <div class="ev-role">창체활동 / 봉사 / 리더십 / 공동체 기여 중점 심사</div>
+      </div>
+    </div>
+    <div class="verdict-box vb-c">
+      "착하고 성실한 학생이라는 인상은 매우 강하다. 그러나 성실함이 리더십의 증거가 되려면 '문제를 발견하고 구조를 바꾼' 장면이 필요하다."
+    </div>
+
+    <div class="sub-title">강점 — 확실히 좋은 것</div>
+    <ul class="item-list">
+      <li><span class="dot-icon di-pos"></span><span><strong>부회장 리더십:</strong> 스포츠 축제 티셔츠 구입 주도, 치어리딩 안무 완성 — 구체적 행동 서술. 형식적 직함이 아닌 실제 역할이 기록됨.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>봉사 다양성:</strong> 배식·청소·공동체학습 도우미·합창발표회 기획·환경교육봉사·수능고사장 정돈 — 총 21시간, 의무적 봉사가 아닌 자발적 참여 다수.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>교과도우미 역할 다수:</strong> 한문·체육1 교과 도우미, 공동체학습 도우미 — 공동체 기여 의식이 일관되게 보임.</span></li>
+      <li><span class="dot-icon di-pos"></span><span><strong>1학기 모범학생 표창:</strong> 공식 인정. 인성 영역의 강력한 외적 증거.</span></li>
+    </ul>
+
+    <div class="sub-title">약점 — 깊이의 문제</div>
+    <ul class="item-list">
+      <li><span class="dot-icon di-neg"></span><span><strong>봉사가 '돕는 역할'에 집중:</strong> 모든 봉사가 기존 구조 안에서 보조하는 형태. 본인이 문제를 발견하고 프로그램을 기획한 봉사가 한 건도 없다.</span></li>
+      <li><span class="dot-icon di-neg"></span><span><strong>리더십의 구체성 부족:</strong> 부회장으로서 갈등 조정, 소외 학생 포용, 제안 채택 같은 '관계 리더십'의 장면이 없다. '업무 집행형' 리더십만 기록됨.</span></li>
+      <li><span class="dot-icon di-warn"></span><span><strong>공동체 탐구 연결 미흡:</strong> 공기질 개선 프로젝트가 사회 기여 탐구로 발전할 가능성이 있었으나, 실제 학급 환경 개선 제안·실행 기록이 없다.</span></li>
+    </ul>
+
+    <div class="sub-title">공동체 역량 평가</div>
+    <div class="mini-scores">
+      <div class="mini-cell">
+        <div class="mini-label">봉사 성실성</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:88%;background:var(--accent-b)"></div></div>
+        <div class="mini-val">매우 강</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">리더십 깊이</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:55%;background:var(--accent-warn)"></div></div>
+        <div class="mini-val">보통</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">자기주도 기여</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:35%;background:var(--accent-c)"></div></div>
+        <div class="mini-val">취약</div>
+      </div>
+      <div class="mini-cell">
+        <div class="mini-label">탐구-공동체 연결</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:40%;background:var(--accent-c)"></div></div>
+        <div class="mini-val">취약</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 치명적 약점 TOP 3 -->
+  <div class="critical-section fade-up delay-4">
+    <div class="critical-title">3인 합의 — 치명적 약점 TOP 3</div>
+
+    <div class="critical-item">
+      <div class="crit-badge cb-1">최우선 / 구조적 결함</div>
+      <div class="crit-head">난관·극복·깨달음 서사 전면 부재</div>
+      <div class="crit-body">과탐실험 세특 외 전 교과에서 '막혔다 → 스스로 해결했다 → 새롭게 알았다'의 구조가 없다. 입학사정관은 이 서사에서 학생의 탐구 진정성을 판단한다. 현재 생기부는 대부분 '수행 결과 보고'이지 탐구 과정 기록이 아니다. 2학년 전 세특에서 이 구조를 의도적으로 설계해야 한다.</div>
+    </div>
+
+    <div class="critical-item">
+      <div class="crit-badge cb-2">2순위 / 진로 서사 분열</div>
+      <div class="crit-head">'접지·산화환원' 축과 '명상·뇌과학' 축이 어디서도 만나지 않음</div>
+      <div class="crit-body">1학년 생기부는 두 개의 독립된 탐구 계열이 공존하는 상태다. 뇌신경 전문간호사라는 진로 아래 두 축이 수렴해야 비로소 '설계된 학생'으로 읽힌다. 2학년에서 두 축이 만나는 통합 탐구 1건이 반드시 완성되어야 한다. (예: 접지가 뇌파에 미치는 영향, 명상 전후 산화 스트레스 측정)</div>
+    </div>
+
+    <div class="critical-item">
+      <div class="crit-badge cb-3">3순위 / 인문사회 공백</div>
+      <div class="crit-head">국어·한국사·사회 세특이 탐구가 아닌 참여·발표 수준</div>
+      <div class="crit-body">이과형 교과의 탐구 깊이와 문과형 교과의 탐구 깊이가 극명하게 차이 난다. 입학사정관은 전 교과에서 고르게 탐구하는 학생을 선호한다. 국어(의료 문학·생명윤리), 한국사(한국 의료사), 사회(의료 불평등 정책 설계) 각 1건의 심화 탐구가 2학년에서 필요하다.</div>
+    </div>
+  </div>
+
+  <!-- 3인 합의 점수 상세 -->
+  <div class="consensus-section fade-up">
+    <div class="dash-title">3인 합의 — 역량별 상세 분석</div>
+    <div class="cons-row"><span class="cons-label">학업역량</span><div class="cons-wrap"><div class="cons-fill" style="width:72%;background:var(--accent-info)"></div></div><span class="cons-val">72</span></div>
+    <div class="cons-row"><span class="cons-label">탐구역량</span><div class="cons-wrap"><div class="cons-fill" style="width:68%;background:var(--accent-b)"></div></div><span class="cons-val">68</span></div>
+    <div class="cons-row"><span class="cons-label">진로역량</span><div class="cons-wrap"><div class="cons-fill" style="width:58%;background:var(--accent-warn)"></div></div><span class="cons-val">58</span></div>
+    <div class="cons-row"><span class="cons-label">자기주도성</span><div class="cons-wrap"><div class="cons-fill" style="width:63%;background:var(--accent-warn)"></div></div><span class="cons-val">63</span></div>
+    <div class="cons-row"><span class="cons-label">공동체역량</span><div class="cons-wrap"><div class="cons-fill" style="width:74%;background:var(--accent-b)"></div></div><span class="cons-val">74</span></div>
+    <div class="cons-row"><span class="cons-label">종합 경쟁력</span><div class="cons-wrap"><div class="cons-fill" style="width:67%;background:var(--accent-a)"></div></div><span class="cons-val">67</span></div>
+    <p style="font-size:12px;color:var(--muted);margin-top:14px">※ 100점 기준 / 학종 상위권 대학 기준 최소 합격선: 약 72~75점 수준(전형 및 모집단위 따라 상이)</p>
+  </div>
+
+  <!-- 2학년 전략 -->
+  <div class="strategy-section fade-up">
+    <div class="strategy-title">2학년 집중 강화 전략 — 5가지 실행 과제</div>
+
+    <div class="strat-item">
+      <div class="strat-num-badge">1</div>
+      <div>
+        <div class="strat-tag">최우선 — 전 교과 적용</div>
+        <div class="strat-head">모든 탐구에 난관·극복·깨달음 구조를 의도적으로 설계</div>
+        <div class="strat-body">수행평가 시작 전 "어디서 막힐 것인가"를 먼저 예측하고, 그 지점에서 방법을 바꾸는 행동을 기록으로 남긴다. 깨달음은 반드시 "이 탐구 전에는 몰랐던 것"이어야 한다. 선생님이 세특을 쓸 때 이 3가지 장면이 자연스럽게 들어가도록 결과물을 역설계해야 한다.</div>
+      </div>
+    </div>
+
+    <div class="strat-item">
+      <div class="strat-num-badge">2</div>
+      <div>
+        <div class="strat-head">두 탐구 축을 '생체 데이터 × 뇌신경 × AI 간호'로 통합하는 탐구 1건 완성</div>
+        <div class="strat-body">접지(전위안정)가 뇌파(뇌신경)에 미치는 영향, 명상 전후 산화환원 지표 변화 등 두 축이 만나는 지점을 탐구한다. 이것이 완성되면 1~2학년 전체 생기부가 하나의 서사로 읽힌다.</div>
+      </div>
+    </div>
+
+    <div class="strat-item">
+      <div class="strat-num-badge">3</div>
+      <div>
+        <div class="strat-head">국어·한국사·사회 세특에서 각 1건의 진로 연결 심화 탐구 확보</div>
+        <div class="strat-body">국어: 의료 문학(간호 서사) 분석 + 생명윤리 텍스트 비판적 읽기. 한국사: 한국 의료史와 현재 의료격차 연결. 사회: 의료 불평등을 시장실패 개념으로 분석하고 본인의 정책 대안 제시. 인문교과도 '탐구하는 학생'으로 읽혀야 한다.</div>
+      </div>
+    </div>
+
+    <div class="strat-item">
+      <div class="strat-num-badge">4</div>
+      <div>
+        <div class="strat-head">자기 몸을 대상으로 한 자기추적 실험 1건 공식화</div>
+        <div class="strat-body">명상 전후 심박수·PEF·집중력 점수를 직접 측정하고 데이터를 축적한다. 이미 PEF·SpO2 장비가 있으므로 측정 비용 없음. 세특에 "직접 실험 설계·측정·분석"이 기록되면 탐구역량이 최상위 수준으로 격상된다.</div>
+      </div>
+    </div>
+
+    <div class="strat-item">
+      <div class="strat-num-badge">5</div>
+      <div>
+        <div class="strat-head">공동체 기여 탐구를 '직접 기획한 캠페인'으로 전환</div>
+        <div class="strat-body">교실 공기질 데이터를 토대로 '9시간 환기 캠페인'을 학교 내에서 실제 실행하고 전후 데이터를 비교한다. 봉사가 '돕는 역할'에서 '변화를 만드는 역할'로 격상되면 공동체역량과 탐구역량이 동시에 강화된다.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>생기부 분석 리포트 · 입학사정관 3인 합의 심층 평가</p>
+  <p style="margin-top:4px">이 문서는 학종 대비 전략 수립을 위해 작성된 참고 자료입니다.</p>
+</footer>
+
+</body>
+</html>
